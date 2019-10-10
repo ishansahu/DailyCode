@@ -14,22 +14,8 @@
  * \}\
  */\
 class Solution \{\
-    public ListNode swapPairs(ListNode head) \{\
-        if(head == null) return null;\
-        ListNode header = new ListNode(0);\
-        header.next = head;\
-        ListNode first = head;\
-        int count =1;\
-        \
-        while(first.next!= null)\{\
-            if(count %2 == 1)\{\
-                int temp = first.val;\
-                first.val = first.next.val;\
-                first.next.val=temp;\
-            \}\
-            first = first.next;\
-            count++;\
-        \}\
-        return header.next;\
+    public void deleteNode(ListNode node) \{\
+        node.val = node.next.val;\
+        node.next = node.next.next;\
     \}\
 \}}
