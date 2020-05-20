@@ -17,3 +17,8 @@ Explanation:
 Product of digits = 4 * 4 * 2 * 1 = 32 
 Sum of digits = 4 + 4 + 2 + 1 = 11 
 Result = 32 - 11 = 21
+ 
+
+Constraints:
+
+1 <= n <= 10^5
