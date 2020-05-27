@@ -1,34 +1,26 @@
 class Solution {
-    public List<Integer> topKFrequent(int[] nums, int k) {
+    public int[] topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap();
-        for(int num : nums) map.put(num, map.getOrDefault(num,0)+1);
-        List<Integer>[] bucket = new ArrayList[nums.length+1];
+        int max = Integer.MIN_VALUE;
+        for(int num : nums){
+            map.put(num, map.getOrDefault(num,0)+1);  
+            max = Math.max(max, map.get(num));
+        } 
+        List<Integer>[] arr = new List[max+1];
         for(Map.Entry<Integer, Integer> entry : map.entrySet()){
-            if(bucket[entry.getValue()] == null)
-                bucket[entry.getValue()] = new ArrayList();
-            bucket[entry.getValue()].add(entry.getKey());
+            int pos = entry.getValue();
+            if(arr[pos] == null) arr[pos] = new ArrayList();
+            arr[pos].add(entry.getKey());
         }
-        List<Integer> res = new ArrayList();
-        for(int i=bucket.length-1; i>0; --i){
-            if(bucket[i] !=null){
-                for(int j=0; j<bucket[i].size() && res.size()<k ; ++j)
-                    res.add(bucket[i].get(j));
+        int[] res = new int[k];
+        int p=0;
+        for(int i=max; i>0;--i){
+            if(arr[i]!=null){
+                for(int j=0; j<arr[i].size() && p<k;++j){
+                    res[p++] = arr[i].get(j);
+                }
             }
         }
-        return res;
-    }
-    public List<Integer> topKFrequent_Sol1(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap();
-        for(int num : nums) map.put(num, map.getOrDefault(num,0)+1);
-        PriorityQueue<Integer> pq = new PriorityQueue((x,y) -> map.get(x)-map.get(y));
-        for(int key : map.keySet()){
-            pq.add(key);
-            if(pq.size() >k)
-                pq.poll();    
-        }
-        List<Integer> res = new ArrayList();
-        while(!pq.isEmpty())
-            res.add(pq.poll());
         return res;
     }
 }
