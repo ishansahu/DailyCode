@@ -5,6 +5,6 @@ class Solution {
             if(set.contains(a)) return a;
             set.add(a);
         }
-        throw null;
+        return -1;
     }
 }
