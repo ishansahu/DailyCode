@@ -1,25 +1,19 @@
 class Solution {
-    public int[] maxSlidingWindow(int[] in, int w) {
-        if(in == null || in.length ==0 ) return new int[0];
-        int[] max_left = new int[in.length];
-        int[] max_right = new int[in.length];
-
-        max_left[0] = in[0];
-        max_right[in.length - 1] = in[in.length - 1];
-
-        for (int i = 1; i < in.length; i++) {
-            max_left[i] = (i % w == 0) ? in[i] : Math.max(max_left[i - 1], in[i]);
-            int j = in.length - i - 1;
-            max_right[j] = (j % w == 0) ? in[j] : Math.max(max_right[j + 1], in[j]);
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        left[0] = nums[0];
+        right[n-1] = nums[n-1];
+        for(int i=1, j=n-i-1; i<n;++i, --j){
+            left[i] = i%k==0?nums[i]: Math.max(nums[i],left[i-1]);
+            right[j] = j%k==0?nums[j]:Math.max(nums[j],right[j+1]);
         }
-        for(int i=0; i< in.length; ++i) System.out.print(" "+max_left[i]);
-        System.out.println();
-        for(int i=0; i< in.length; ++i) System.out.print(" "+max_right[i]);
-        int[] sliding_max = new int[in.length - w + 1];
-        for (int i = 0, j = 0; i + w <= in.length; i++) {
-            sliding_max[j++] = Math.max(max_right[i], max_left[i + w - 1]);
+        int[] res = new int[n-k+1];
+        for(int i=0, j=0;i+k<=n; ++i){
+            res[j++] = Math.max(left[i+k-1],right[i]);
         }
-        return sliding_max;
+        
+        return res;
     }
-    
 }
